@@ -28,7 +28,8 @@ sudo apt-get install nginx curl
 curl -v http://localhost/
 ```
 
-В ответ вернется что-то вроде этого:
+<details><summary>В ответ вернется что-то вроде этого:</summary>
+
 ```
 *   Trying ::1...
 * TCP_NODELAY set
@@ -76,5 +77,7 @@ Commercial support is available at
 * Curl_http_done: called premature == 0
 * Connection #0 to host localhost left intact
 ```
+
+</details>
 
 ## Install MySQL
