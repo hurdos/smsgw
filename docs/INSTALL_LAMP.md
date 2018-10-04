@@ -149,3 +149,48 @@ sudo nano /etc/hosts
 ```
 
 ![Меняем доменное имя](https://github.com/hurdos/smsgw/blob/master/imgs/lamp2hosts.png).
+
+Далее создаем новую конфигурацию `nginx` для хоста `lamp.lo`
+
+```nginx
+server {
+	server_name lamp.lo;
+
+	root /var/www/lamp;
+
+	index index.php;
+
+	location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+
+        # pass PHP scripts to FastCGI server
+        location ~ \.php$ {
+               include snippets/fastcgi-php.conf;
+               fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        }
+}
+```
+
+В зависимости от дистрибутива linux некоторые параметры могут различатся поэтому проверьте пути указанные в конфиг файле. Такие файлы как `fastcgi-php.conf` и `/var/run/php/php7.0-fpm.sock` могут отличаться от ваших.
+Расположить файл конфигурации нужно там откуда `nginx` сервер подгрузит его успешно. В моем случаи это путь `/etc/nginx/sites-enabled/lamp.lo`.
+
+Далее следует проверить что конфигурация корректная и перегрузить `nginx` сервер
+
+```bash
+sudo service nginx configtest
+```
+
+Если возникла ошибка, то посмотреть что произошло можно в логе ошибок `/var/log/nginx/error.log`.
+
+После успешной проверки конфигурации перезапускаем `nginx` сервер
+
+```bash
+sudo service nginx restart
+```
+
+После этого проверяем в браузере хост `http://lamp.lo/`
+
+![Информация о конфигурации PHP](https://github.com/hurdos/smsgw/blob/master/imgs/phpinfo4lamp.png)
