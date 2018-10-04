@@ -1,5 +1,5 @@
 
-#LAMP
+# LAMP
 
 Install LAMP - Linux Apache(Nginx) MySQL PHP.
 
