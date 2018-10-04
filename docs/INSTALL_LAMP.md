@@ -3,6 +3,11 @@
 
 Install LAMP - Linux Apache(Nginx) MySQL PHP.
 
+* [Установка Linux](#install-linux)
+* [Установка Nginx](#install-nginx)
+* [Усьановка MySQL](#install-mysql)
+* [Установка PHP](#install-php)
+
 
 ## Install Linux
 
@@ -81,3 +86,41 @@ Commercial support is available at
 </details>
 
 ## Install MySQL
+
+Устанавливаем БД сервер MySQL.
+
+```bash
+sudo apt-get install mysql-server
+```
+
+После установки необходимо создать под себя пользователя, т.к. под root пользователем нельзя работать.
+А также создать базу данных с которой мы потом будем работать и предоставить полные права созданому пользователю.
+
+Нужно войти в БД
+
+```bash
+sudo mysql -u root
+```
+
+Откроется командная строка БД, где создадим пользователя. В моем случаи имя пользователя `den`.
+
+```sql
+CREATE USER den IDENTIFIED BY 'your_password';
+```
+
+Далее создаем базу данных `smsgw`.
+
+```sql
+CREATE DATABASE smsgw;
+```
+
+После этого назначаем полные права на эту БД нашему пользователю. И обновляем привелегии.
+
+```sql
+GRANT ALL PRIVILEGES ON smsgw.* TO den;
+FLUSH PRIVILEGES;
+```
+
+В дальнейшем практически вся работа с БД будет проводится через прослойку PHP абстракций. Но знание SQL строго рекомендуется, т.к. анализ данных в БД в последствии очень важен. 
+
+## Install PHP
