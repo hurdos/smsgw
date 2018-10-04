@@ -124,3 +124,28 @@ FLUSH PRIVILEGES;
 В дальнейшем практически вся работа с БД будет проводится через прослойку PHP абстракций. Но знание SQL строго рекомендуется, т.к. анализ данных в БД в последствии очень важен. 
 
 ## Install PHP
+
+Устанавливаем пакеты PHP:
+
+```bash
+sudo apt-get install php-cli php-fpm php-curl php-gd php-enchant php-bcmath php-bz2 php-imap php-intl php-json php-mbstring php-mcrypt php-soap php-xml php-xmlrpc php-zip php-redis php-yaml php-mysql php-xdebug
+```
+
+В нашей конфигурации окружения мы будем использовать связку `nginx` + `php-fpm`, [FPM - FastGCI Process Manager](http://php.net/manual/ru/install.fpm.php).
+
+Для проверки работоспособности `php-fpm` нам нужно настроить хост в `nginx` и создать тестовый php скрипт.
+
+Создаем в директории `/var/www/` новый каталог `lamp`, а в этом каталоге создаем `index.php` файл.
+
+```bash
+sudo mkdir /var/www/lamp
+echo '<?php phpinfo(); ?>' | sudo tee /var/www/lamp/index.php > /dev/null
+```
+
+Добавляем новое доменное имя в `/etc/hosts`
+
+```bash
+sudo nano /etc/hosts
+```
+
+![Меняем доменное имя](https://github.com/hurdos/smsgw/blob/master/imgs/lamp2hosts.png).
